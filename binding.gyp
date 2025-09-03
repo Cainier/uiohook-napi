@@ -11,6 +11,18 @@
       'include_dirs': [
         'libuiohook/include',
         'src/lib',
+      ],
+      'conditions': [
+        ['OS=="mac"', {
+          # Build universal2 binary for Electron cross-arch packaging on Apple Silicon
+          'xcode_settings': {
+            'ARCHS': ['arm64', 'x86_64'],
+            'ONLY_ACTIVE_ARCH': 'NO',
+            'MACOSX_DEPLOYMENT_TARGET': '10.13'
+          },
+          'cflags+': ['-arch', 'arm64', '-arch', 'x86_64'],
+          'ldflags+': ['-arch', 'arm64', '-arch', 'x86_64']
+        }]
       ]
     },
     {
@@ -68,7 +80,13 @@
               "-framework CoreFoundation"
             ],
           },
-          'cflags': ['-std=c99', '-pedantic', '-Wall', '-pthread'],
+          'xcode_settings': {
+            'ARCHS': ['arm64', 'x86_64'],
+            'ONLY_ACTIVE_ARCH': 'NO',
+            'MACOSX_DEPLOYMENT_TARGET': '10.13'
+          },
+          'cflags': ['-std=c99', '-pedantic', '-Wall', '-pthread', '-arch', 'arm64', '-arch', 'x86_64'],
+          'ldflags': ['-arch', 'arm64', '-arch', 'x86_64'],
           'sources': [
             "libuiohook/src/darwin/input_helper.c",
             "libuiohook/src/darwin/input_hook.c",
