@@ -25,7 +25,7 @@
     "prebuild": "prebuildify --napi",
     "prebuild:darwin": "prebuildify --napi --platform darwin --arch x64 && prebuildify --napi --platform darwin --arch arm64",
     "fetch-libuiohook": "bash ./scripts/fetch-libuiohook.sh",
-    "prepublishOnly": "npm run fetch-libuiohook && npm run build-ts && npm run prebuild:darwin",
+    "prepublishOnly": "npm run fetch-libuiohook && npm run build-ts",
     "build-ts": "tsc",
     "demo": "ts-node src/demo.ts",
     "make-libuiohook-patch": "git -C ./libuiohook diff --cached > ./src/libuiohook.patch",
